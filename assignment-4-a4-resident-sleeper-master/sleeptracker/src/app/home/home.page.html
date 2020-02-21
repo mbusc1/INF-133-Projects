@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      40 Winks
+    </ion-title>
+    <ion-button slot="end" color="warning" (click)="resetToday()">Reset Today<ion-icon name="refresh" ></ion-icon></ion-button>
+  </ion-toolbar>
+</ion-header>
+
+
+  <ion-content class="ion-padding" >
+    <ion-card>
+      <ion-card-content>
+        <canvas #nightCanvas></canvas>
+        <p>Adding another entry will change that day's value to the new entry.</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <canvas #dayCanvas></canvas>
+        <p>Legend:</p>
+        <p>'Feeling active, vital, alert, or wide awake': 1</p>
+        <p>'Functioning at high levels, but not at peak; able to concentrate': 2</p>
+        <p>'Awake, but relaxed; responsive but not fully alert': 3</p>
+        <p>'Somewhat foggy, let down': 4</p>
+        <p>'Foggy; losing interest in remaining awake; slowed down': 5</p>
+        <p>'Sleepy, woozy, fighting sleep; prefer to lie down': 6</p>
+        <p>'No longer fighting sleep, sleep onset soon; having dream-like thoughts': 7</p>
+        <p>Adding a new entry will update the average for today with the new tiredness rating.</p>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+
+
+<ion-footer>
+  <ion-item>
+    <ion-icon name="moon">11</ion-icon>
+    New Night log (hour:min):&nbsp;
+    <ion-datetime [(ngModel)]="nightEntry" (ionChange)="onAddNight(nightEntry)" value=[(nightEntry)] doneText="Add" placeholder="Day:hour:min" display-format="DDD HH mm" picker-format="DDD HH mm"></ion-datetime>
+
+  </ion-item>
+  <ion-item>
+    <ion-icon name="sunny">11</ion-icon>
+    New Day log (1-7):&nbsp;
+    <ion-input [(ngModel)]="dayEntry"  required="true" type="number" min="1" max="7" maxlength="1" pattern="^[1-7]$">  </ion-input>
+    <ion-button slot="end" (click)="onAddDay(dayEntry)" ><ion-icon name="add" ></ion-icon></ion-button>
+  </ion-item>
+
+</ion-footer>
+
+
+
+
+

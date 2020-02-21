@@ -1,0 +1,89 @@
+<div *ngIf="artist" class="row">
+	<div class="col-6">
+		<!--TODO: populate with artist name-->
+		<h1>{{artist.name}}</h1>
+		<!--TODO: populate with artist image URL-->
+		<img id="artistImg" [src]="artist.imageURL">
+		<p>
+			<!--TODO: link to artist page on spotify, display artist name-->
+			<a class="btn btn-light" role="button" target="_blank" [href]="artist.url">Open {{artist.name}} on Spotify</a>
+		</p>
+	</div>
+	<div class="col-2">
+		<h3>Genres</h3>
+		<ul>
+			<!--TODO: loop over artist's genres and display them-->
+			<li *ngFor="let gen of artist.genres">{{gen}}</li>
+		</ul>
+		<p>
+		</p>
+	</div>
+	<div class="col-4">
+		<!--TODO: display artist name-->
+		<h3>{{artist.name}}'s Top Tracks</h3>
+		<!--TODO: display the track list for the album-->
+		<app-track-list [tracks]="topTracks" *ngIf="topTracks"></app-track-list>
+	</div>
+</div>
+
+<div *ngIf="artist" class="row">
+	<div class="col-6">
+		<!--TODO: display artist name-->
+		<h3>{{artist.name}}'s Albums</h3>
+		<!--TODO: Display a carousel component for the artist's albums. Bind carousel's resources and give it a static carouselId.-->
+		<div id="album_carousel" class="carousel slide" data-ride="carousel">
+			<div class="carousel-inner">
+				<div class="carousel-item active" >
+					<a href="album/{{albums[0].id}}">
+						<img class="d-block w-100" [src]=albums[0].images[0].url [alt]=albums[0].name>
+					</a>
+				</div>
+				<div class="carousel-item" *ngFor="let art of albums  | slice:1:-1">
+					<a href="album/{{art.id}}">
+						<!--had to look up how to slice in ngfor:-->
+						<!--https://stackoverflow.com/questions/44944570/using-slice-pipe-with-variable-parameters-in-ngfor-->
+						<img class="d-block w-100" [src]=art.images[0].url [alt]=art.name>
+					</a>
+				</div>
+			</div>
+			<a class="carousel-control-prev" href="#album_carousel" role="button" data-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="carousel-control-next" href="#album_carousel" role="button" data-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
+	</div>
+
+	<div class="col-6">
+		<h3>Similar Artists</h3>
+		<!--TODO: Display a carousel component for similar artists. Bind carousel's resources and give it a static carouselId.-->
+		<div id="sim_carousel" class="carousel slide" data-ride="carousel">
+			<div class="carousel-inner">
+				<div class="carousel-item active" >
+					<a href="artist/{{relatedArtists[0].id}}">
+						<img class="d-block w-100" [src]=relatedArtists[0].images[0].url [alt]=relatedArtists[0].name>
+					</a>
+				</div>
+				<div class="carousel-item" *ngFor="let art of relatedArtists  | slice:1:-1">
+					<a href="artist/{{art.id}}">
+						<!--had to look up how to slice in ngfor:-->
+						<!--https://stackoverflow.com/questions/44944570/using-slice-pipe-with-variable-parameters-in-ngfor-->
+						<img class="d-block w-100" [src]=art.images[0].url [alt]=art.name>
+					</a>
+				</div>
+			</div>
+			<a class="carousel-control-prev" href="#sim_carousel" role="button" data-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="carousel-control-next" href="#sim_carousel" role="button" data-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
+	</div>
+
+</div>

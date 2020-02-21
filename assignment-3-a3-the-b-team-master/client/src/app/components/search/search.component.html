@@ -1,0 +1,74 @@
+<h1>Search Spotify</h1>
+<!--TODO: bind input's model to searchString-->
+<!--much of this code is from lecture 10-->
+<input [(ngModel)] = "searchString" (change)="search(searchString,searchCategory)">
+<!--TODO: bind select's model to searchCategory-->
+<select [(ngModel)] = "searchCategory">
+	<!--TODO: loop over searchCategories to create dropdown options-->
+	<!--populate body and text value https://www.w3schools.com/tags/att_option_selected.asp-->
+	<option *ngFor="let cat of searchCategories" value={{cat}}>
+		{{cat}}
+	</option>
+
+</select>
+<!--TODO: Call search function when the button is clicked-->
+<button class="btn btn-light">Search</button>
+<!--TODO: Display a carousel component if searching for an artist or album. Bind carousel's resources and give it a static carouselId.-->
+
+<!--bootstrap example code-->
+<div *ngIf="searchCategory=='artist'">
+<div id="artist_carousel" class="carousel slide" data-ride="carousel">
+	<div class="carousel-inner">
+		<div class="carousel-item active" >
+			<a href="artist/{{resources[0].id}}">
+				<img class="d-block w-100" [src]=resources[0].imageURL [alt]=resources[0].name>
+			</a>
+		</div>
+		<div class="carousel-item" *ngFor="let art of resources  | slice:1:-1">
+			<a href="artist/{{art.id}}">
+				<!--had to look up how to slice in ngfor:-->
+				<!--https://stackoverflow.com/questions/44944570/using-slice-pipe-with-variable-parameters-in-ngfor-->
+				<img class="d-block w-100" [src]=art.imageURL [alt]=art.name>
+			</a>
+		</div>
+	</div>
+	<a class="carousel-control-prev" href="#artist_carousel" role="button" data-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="sr-only">Previous</span>
+	</a>
+	<a class="carousel-control-next" href="#artist_carousel" role="button" data-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="sr-only">Next</span>
+	</a>
+</div>
+</div>
+
+<div *ngIf="searchCategory=='album'">
+<div id="album_carousel" class="carousel slide" data-ride="carousel">
+	<div class="carousel-inner">
+		<div class="carousel-item active" >
+			<a href="album/{{resources[0].id}}">
+				<img class="d-block w-100" [src]=resources[0].imageURL [alt]=resources[0].name>
+			</a>
+		</div>
+		<div class="carousel-item" *ngFor="let art of resources  | slice:1:-1">
+			<a href="album/{{art.id}}">
+				<!--had to look up how to slice in ngfor:-->
+				<!--https://stackoverflow.com/questions/44944570/using-slice-pipe-with-variable-parameters-in-ngfor-->
+				<img class="d-block w-100" [src]=art.imageURL [alt]=art.name>
+			</a>
+		</div>
+	</div>
+	<a class="carousel-control-prev" href="#album_carousel" role="button" data-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="sr-only">Previous</span>
+	</a>
+	<a class="carousel-control-next" href="#album_carousel" role="button" data-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="sr-only">Next</span>
+	</a>
+</div>
+</div>
+    <!--TODO: Display a track-list component if searching for a track. Bind track-list's tracks.-->
+<!--several people helped me figure this out: https://uci-inf133-fa19.slack.com/archives/CPU4XES64/p1574138925351600 https://uci-inf133-fa19.slack.com/archives/CPU4XES64/p1574139408354600 https://uci-inf133-fa19.slack.com/archives/CPU4XES64/p1574139437355300-->
+<div *ngIf="searchCategory=='track'"><app-track-list [tracks]="resources"></app-track-list></div>
